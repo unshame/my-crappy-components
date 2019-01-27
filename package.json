@@ -1,6 +1,6 @@
 {
   "name": "my-crappy-components",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "My crappy es2018 web component library using ejs for templating.",
   "main": "index.js",
   "scripts": {},
@@ -13,8 +13,5 @@
   "bugs": {
     "url": "https://github.com/unshame/my-crappy-components/issues"
   },
-  "homepage": "https://github.com/unshame/my-crappy-components#readme",
-  "dependencies": {
-    "ejs": "^2.6.1"
-  }
+  "homepage": "https://github.com/unshame/my-crappy-components#readme"
 }

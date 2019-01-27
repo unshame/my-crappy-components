@@ -1,5 +1,4 @@
 import EventEmitter from './EventEmitter.js';
-import ejs from 'ejs';
 
 export default class Component extends EventEmitter {
     constructor({
@@ -12,11 +11,6 @@ export default class Component extends EventEmitter {
         this._ownsElement = !(element instanceof Element);
         this.element = this._ownsElement ? this._createElement(element) : element;
         this._data = data;
-
-        if(typeof template != 'function') {
-            template = ejs.compile(template);
-        }
-        
         this._template = template;
         this._hiddenClass = hiddenClass;
     }
