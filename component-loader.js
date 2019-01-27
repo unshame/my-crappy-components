@@ -23,12 +23,13 @@ async function loadComponent(name) {
         }
     }
 
-    let componentPath = location.pathname + path + 'component.js';
+    let base = location.href.replace(/[^/]*$/, '');
+    let componentPath = base + path + 'component.js';
     let component = (await import(componentPath)).default;
     let template;
 
     if (!noTemplate) {
-        let templatePath = location.pathname + path + 'template';
+        let templatePath = base + path + 'template';
 
         if (useEjs) {
             let response = await fetch(templatePath + '.ejs');
@@ -64,8 +65,28 @@ async function loadAndCreateComponent(name, options) {
 }
 
 function createComponent(name, options = {}) {
-    let { component, template } = components[name];
-    return new component({ template, ...options });
+    let { component, template, noTemplate } = components[name];
+
+    let usingCustomTemplate = false;
+    if (options.template) {
+        template = options.template;
+        usingCustomTemplate = true;
+    }
+
+    if (typeof template != 'function') {
+
+        if (usingCustomTemplate || !noTemplate) {
+            template = ejs.compile(template);
+
+            if (!usingCustomTemplate) {
+                components[name].template = template;
+            }
+        }
+    }
+
+    options = { ...options, template };
+
+    return new component(options);
 }
 
 export {
