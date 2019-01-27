@@ -17,11 +17,12 @@ export default class ComponentCollection extends Component {
     }
 
     addChild({
+        constructor,
         name, id, tag,
         options = {}
     }) {
         options.element = { tag, name, id };
-        let component = new createComponent(name, options);
+        let component = constructor ? new constructor(options) : createComponent(name, options);
         let dataId = id ? `data-component-id="${id}"` : '';
         let componentInfo = {
             component, name, id,
