@@ -5,6 +5,10 @@ let useEjs = !!ejs;
 const components = {};
 
 export default function setDefinitions(_components, _useEjs = useEjs) {
+    for (let [name, componentInfo] of Object.entries(_components)) {
+        let { component, template, path, dependencies, noTemplate } = componentInfo;
+        components[name] = { component, template, path, dependencies, noTemplate };
+    }
     Object.assign(components, _components);
     useEjs = _useEjs;
 }
@@ -15,7 +19,7 @@ async function loadComponent(name) {
 
     if (dependencies) {
 
-        for(let dependecy of dependencies) {
+        for (let dependecy of dependencies) {
 
             if (!componentIsLoaded(dependecy)) {
                 await loadComponent(dependecy);
@@ -46,13 +50,13 @@ async function loadComponent(name) {
         }
     }
 
-    Object.assign(componentInfo, {component, template});
+    Object.assign(componentInfo, { component, template });
 
     return componentInfo;
 }
 
 function componentIsLoaded(name) {
-    return components[name].component && components[name].component instanceof Component;
+    return !!components[name].component;
 }
 
 async function loadAndCreateComponent(name, options) {

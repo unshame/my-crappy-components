@@ -17,12 +17,12 @@ export default class ComponentCollection extends Component {
     }
 
     addChild({
-        constructor,
+        component,
         name, id, tag,
         options = {}
     }) {
         options.element = { tag, name, id };
-        let component = constructor ? new constructor(options) : createComponent(name, options);
+        component = component ? new component(options) : createComponent(name, options);
         let dataId = id ? `data-component-id="${id}"` : '';
         let componentInfo = {
             component, name, id,
@@ -37,12 +37,15 @@ export default class ComponentCollection extends Component {
     removeChild(child, destroy, alwaysRemove) {
         let index, id;
 
-        if(child instanceof Component) {
+        if (typeof child == 'object') {
             index = this.children.findIndex(otherChild => otherChild.component == child);
-            child = this.children[index];
-        }
-        else if(typeof child == 'object') {
-            index = this.children.indexOf(child);
+
+            if (index == -1) {
+                index = this.children.indexOf(child);
+            }
+            else {
+                child = this.children[index];
+            }
         }
         else if (typeof child == 'number') {
             index = child;
@@ -68,7 +71,7 @@ export default class ComponentCollection extends Component {
             let { component, selector, hasBeenEmbedded } = child;
             let node = this.element.querySelector(selector);
 
-            if(node) {
+            if (node) {
 
                 if (!hasBeenEmbedded) {
 
