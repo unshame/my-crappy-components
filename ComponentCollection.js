@@ -1,5 +1,4 @@
 import Component from './Component.js';
-import { createComponent } from './component-loader.js';
 
 export default class ComponentCollection extends Component {
 
@@ -22,7 +21,7 @@ export default class ComponentCollection extends Component {
         options = {}
     }) {
         options.element = { tag, name, id };
-        component = component ? new component(options) : createComponent(name, options);
+        component = new component(options);
         let dataId = id ? `data-component-id="${id}"` : '';
         let componentInfo = {
             component, name, id,

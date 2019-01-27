@@ -1,6 +1,6 @@
 {
   "name": "my-crappy-components",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "My crappy es2018 web component library using ejs for templating.",
   "main": "index.js",
   "scripts": {},
