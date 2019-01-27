@@ -9,7 +9,6 @@ export default function setDefinitions(_components, _useEjs = useEjs) {
         let { component, template, path, dependencies, noTemplate } = componentInfo;
         components[name] = { component, template, path, dependencies, noTemplate };
     }
-    Object.assign(components, _components);
     useEjs = _useEjs;
 }
 
