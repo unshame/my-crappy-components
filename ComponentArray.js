@@ -7,10 +7,8 @@ export default class ComponentArray extends ComponentCollection {
     }
 
     getRenderData() {
-        let data = {
-            children: this.filterChildren(this.children).map(child => this.mapChild(child))
-        };
-        return Object.assign(data, super.getRenderData());
+        let children = this.filterChildren(this.children).map(child => this.mapChild(child));
+        return { children, ...super.getRenderData() };
     }
 
     filterChildren(children) {
